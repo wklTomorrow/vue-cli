@@ -10,7 +10,9 @@
                     :key="index"
                     @click="onClickMenu(item, index)"
                     :class="[active === index ? 'activeClass' : '']"
-            >{{ item.name }}</div>
+            >
+                <i class="el-icon-user-solid"></i>
+                {{ item.name }}</div>
         </div>
     </div>
 </template>
@@ -51,8 +53,11 @@ export default {
             color: #ffffff;
         }
         .main-con {
+            box-sizing: border-box;
             height: 92%;
             width: 100%;
+            padding: 2%;
+            background-color: #f5f7f9;
         }
         .home-menu {
             height: 8vh;
