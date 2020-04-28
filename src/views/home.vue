@@ -1,7 +1,12 @@
 <template>
     <div class="tit">
         <div class="main-con">
-            <router-view></router-view>
+            <!--<router-view></router-view>-->
+            <div>{{ count }}</div>
+            <el-button @click="add">增加</el-button>
+            <el-button @click="plusC">减少</el-button>
+            <el-input v-model="test_input" style="width: 200px" @input="onInputThis"></el-input>
+            <p>{{ str }}</p>
         </div>
         <div class="home-menu">
             <div
@@ -18,18 +23,42 @@
 </template>
 
 <script>
+import { mapActions, mapState, mapMutations } from 'vuex'
 import { HOME_MENU } from '@utils/menu'
 export default {
     data() {
         return {
             menu: '',
-            active: 0
+            active: 0,
+            test_input: ''
+        }
+    },
+    computed: {
+        // ...mapState({
+        //     count: state => state.count
+        // })
+        count() {
+            return this.$store.state.count
+        },
+        str() {
+            return this.$store.state.car.sObj
         }
     },
     mounted() {
         this.menu = HOME_MENU
     },
     methods: {
+        add() {
+            this.$store.commit('addCount')
+        },
+        onInputThis(e) {
+            this.updateStr(e)
+            // this.showStr(e)
+            // this.$store.commit('onShowThis', e)
+        },
+        plusC() {
+            this.plus()
+        },
         onClickMenu(item, index) {
             if (index === this.active) {
                 return
@@ -37,7 +66,9 @@ export default {
                 this.active = index
                 this.$router.push({name: item.code})
             }
-        }
+        },
+        ...mapActions(['plusCount', 'showStr', 'updateStr']),
+        ...mapMutations(['plus'])
     }
 }
 </script>
